@@ -72,7 +72,7 @@ function CurrentWeather({ location, setLocation }) {
         fetchWeatherData(defaultLatitude, defaultLongitude);
       }
     }
-  }, [location, apiKey]);
+  }, [location, apiKey, setLocation]);
 
   return (
     <>

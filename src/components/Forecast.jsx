@@ -21,47 +21,68 @@ function Forecast({ location, setLocation }) {
   const [day2Name, setDay2Name] = useState("");
   const [day3Name, setDay3Name] = useState("");
 
+  const defaultLatitude = 51.52; // Default latitude (London)
+  const defaultLongitude = -0.11; // Default longitude (London)
+
   useEffect(() => {
-    async function fetchWeatherForecast() {
+    const fetchWeatherForecast = async (latitude, longitude) => {
       try {
         const response = await axios.get(
           `https://api.weatherapi.com/v1/forecast.json`,
           {
             params: {
               key: apiKey,
-              q: `${location.latitude},${location.longitude}`,
-              days: 4,
+              q: `${latitude},${longitude}`,
+              days: 3,
             },
           }
         );
 
         const forecast = response.data.forecast.forecastday;
 
-        setDay1Temp(forecast[1].day.avgtemp_c);
-        setDay2Temp(forecast[2].day.avgtemp_c);
-        setDay3Temp(forecast[3].day.avgtemp_c);
+        setDay1Temp(forecast[0].day.avgtemp_c);
+        setDay2Temp(forecast[1].day.avgtemp_c);
+        setDay3Temp(forecast[2].day.avgtemp_c);
 
-        setDay1Condition(forecast[1].day.condition.text);
-        setDay2Condition(forecast[2].day.condition.text);
-        setDay3Condition(forecast[3].day.condition.text);
+        setDay1Condition(forecast[0].day.condition.text);
+        setDay2Condition(forecast[1].day.condition.text);
+        setDay3Condition(forecast[2].day.condition.text);
 
-        setDay1Icon(forecast[1].day.condition.icon);
-        setDay2Icon(forecast[2].day.condition.icon);
-        setDay3Icon(forecast[3].day.condition.icon);
+        setDay1Icon(forecast[0].day.condition.icon);
+        setDay2Icon(forecast[1].day.condition.icon);
+        setDay3Icon(forecast[2].day.condition.icon);
 
         const today = new Date();
-        setDay1Name(format(addDays(today, 1), "EEEE"));
-        setDay2Name(format(addDays(today, 2), "EEEE"));
-        setDay3Name(format(addDays(today, 3), "EEEE"));
+        setDay1Name(format(today, "EEEE"));
+        setDay2Name(format(addDays(today, 1), "EEEE"));
+        setDay3Name(format(addDays(today, 2), "EEEE"));
       } catch (error) {
         console.error("Error fetching weather forecast:", error);
       }
-    }
+    };
 
     if (location) {
-      fetchWeatherForecast();
+      fetchWeatherForecast(location.latitude, location.longitude);
+    } else {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setLocation({ latitude, longitude });
+            fetchWeatherForecast(latitude, longitude);
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+            fetchWeatherForecast(defaultLatitude, defaultLongitude);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+        alert("Geolocation is not supported by this browser!");
+        fetchWeatherForecast(defaultLatitude, defaultLongitude);
+      }
     }
-  }, [location, apiKey]);
+  }, [location, apiKey, setLocation]);
 
   return (
     <div className="w-full text-center">
