@@ -85,7 +85,7 @@ function Forecast({ location, setLocation }) {
   }, [location, apiKey, setLocation]);
 
   return (
-    <div className="w-full text-center">
+    <div className="w-full flex flex-col justify-center items-center text-center">
       <h1 className="text-xl font-bold py-2">3 Day Forecast</h1>
       <div className="w-full flex flex-row justify-evenly items-center px-2">
         <div className="w-full flex flex-col px-4 py-4 justify-center items-center gap-2 font-medium">
