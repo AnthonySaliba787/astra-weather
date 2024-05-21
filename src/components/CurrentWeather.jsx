@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FiWind } from "react-icons/fi";
 import { IoUmbrellaSharp, IoWaterSharp } from "react-icons/io5";
+import Forecast from "./Forecast";
 
 function CurrentWeather({ location, setLocation }) {
   const apiKey = import.meta.env.VITE_API_KEY;
@@ -89,8 +90,8 @@ function CurrentWeather({ location, setLocation }) {
 
         <div className="w-full flex flex-col px-4 py-4 justify-center items-center">
           <div className="w-full flex flex-col justify-evenly items-center text-center gap-2">
-            <p className="font-extralight text-5xl">{temp} °C</p>
-            <p className="font-medium text-sm pb-4">Feels like {feels} °C</p>
+            <p className="font-extralight text-5xl">{temp}&deg;C</p>
+            <p className="font-medium text-sm pb-4">Feels like {feels}&deg;C</p>
           </div>
           <div className="w-full flex flex-row justify-evenly items-center py-4">
             <div className="w-full flex flex-col gap-1 justify-center items-center">
@@ -107,6 +108,7 @@ function CurrentWeather({ location, setLocation }) {
             </div>
           </div>
         </div>
+        <Forecast location={location} setLocation={setLocation} />
       </div>
     </>
   );
