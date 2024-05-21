@@ -76,7 +76,7 @@ function CurrentWeather({ location, setLocation }) {
 
   return (
     <>
-      <div className="max-w-4xl flex flex-col justify-center items-center gap-2 bg-neutral-100 px-4 py-4 rounded-md shadow-md hover:scale-105 hover:shadow-lg duration-300">
+      <div className="max-w-4xl md:w-1/2 lg:w-1/2 flex flex-col justify-center items-center gap-1 bg-neutral-100 px-4 py-4 rounded-md shadow-md hover:scale-105 hover:shadow-lg duration-300">
         <h1 className="text-3xl font-bold py-2">Astra Weather</h1>
         <div className="w-full flex justify-center items-center px-4 py-2">
           <p className="text-lg text-center text-neutral-400">
@@ -88,7 +88,7 @@ function CurrentWeather({ location, setLocation }) {
           </p>
         </div>
 
-        <div className="w-full flex flex-col px-4 py-4 justify-center items-center">
+        <div className="w-full flex flex-col px-4 py-2 justify-center items-center">
           <div className="w-full flex flex-col justify-evenly items-center text-center gap-2">
             <p className="font-extralight text-5xl">{temp}&deg;C</p>
             <p className="font-medium text-sm pb-4">Feels like {feels}&deg;C</p>
