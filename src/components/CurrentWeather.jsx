@@ -1,12 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FiWind } from "react-icons/fi";
-import { IoUmbrellaSharp } from "react-icons/io5";
-import { WiHumidity } from "react-icons/wi";
+import { IoUmbrellaSharp, IoWaterSharp } from "react-icons/io5";
 
-function CurrentWeather() {
+function CurrentWeather({ location, setLocation }) {
   const apiKey = import.meta.env.VITE_API_KEY;
-  const [location, setLocation] = useState(null);
 
   const [locationName, setLocationName] = useState("");
   const [country, setCountry] = useState("");
@@ -20,8 +18,8 @@ function CurrentWeather() {
   const [humidity, setHumidity] = useState(0);
   const [precip, setPrecip] = useState(0);
 
-  const defaultLatitude = 40.7128; // Default latitude (New York City)
-  const defaultLongitude = -74.006; // Default longitude (New York City)
+  const defaultLatitude = 51.52; // Default latitude (London)
+  const defaultLongitude = -0.11; // Default longitude (London)
 
   useEffect(() => {
     const fetchWeatherData = (latitude, longitude) => {
@@ -74,9 +72,10 @@ function CurrentWeather() {
       }
     }
   }, [location, apiKey]);
+
   return (
     <>
-      <div className="max-w-4xl flex flex-col justify-center items-center gap-2 bg-neutral-100 px-4 py-4 rounded-md shadow-md">
+      <div className="max-w-4xl flex flex-col justify-center items-center gap-2 bg-neutral-100 px-4 py-4 rounded-md shadow-md hover:scale-105 hover:shadow-lg duration-300">
         <h1 className="text-3xl font-bold py-2">Astra Weather</h1>
         <div className="w-full flex justify-center items-center px-4 py-2">
           <p className="text-lg text-center text-neutral-400">
@@ -103,7 +102,7 @@ function CurrentWeather() {
               <p>{precip} mm</p>
             </div>
             <div className="w-full flex flex-col gap-1 justify-center items-center">
-              <WiHumidity size={26} />
+              <IoWaterSharp size={26} />
               <p>{humidity}%</p>
             </div>
           </div>
