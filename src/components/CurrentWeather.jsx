@@ -25,7 +25,7 @@ function CurrentWeather({ location, setLocation }) {
   useEffect(() => {
     const fetchWeatherData = (latitude, longitude) => {
       axios
-        .get(`http://api.weatherapi.com/v1/current.json`, {
+        .get(`https://api.weatherapi.com/v1/current.json`, {
           params: {
             key: apiKey,
             q: `${latitude},${longitude}`,
