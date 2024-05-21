@@ -59,7 +59,7 @@ function App() {
     } else {
       getLocation();
     }
-  }, [location, apiKey]);
+  }, [location]);
 
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -70,10 +70,6 @@ function App() {
         },
         (error) => {
           console.error("Error getting location:", error);
-          if (error.code === error.PERMISSION_DENIED) {
-            // If permission is denied, keep asking
-            getLocation();
-          }
         }
       );
     } else {
@@ -83,6 +79,24 @@ function App() {
 
   return (
     <>
+      {!location ? (
+        <div className="w-screen min-h-screen fixed bg-black/80 backdrop-blur-xl z-10 flex justify-center items-center px-4 py-4">
+          <div className="min-w-1/3 py-4 px-4 bg-black flex flex-col justify-center items-center rounded-md text-center gap-4">
+            <h1 className="text-2xl text-neutral-200 font-bold">
+              Location Not Detected
+            </h1>
+            <p className="text-lg font-medium text-neutral-200">
+              Please allow location access in your browser to use this app!
+            </p>
+            <button
+              className="min-w-1/6 px-4 py-4 bg-neutral-800 rounded-md text-neutral-200 font-bold hover:bg-neutral-700 active:bg-neutral-600 duration-300"
+              onClick={getLocation}
+            >
+              Update Location
+            </button>
+          </div>
+        </div>
+      ) : null}
       <div className="max-w-3xl min-h-screen mx-auto flex flex-col justify-center items-center py-4 px-4 text-neutral-800">
         <h1 className="text-3xl font-medium">Astra Weather</h1>
         <h2>{locationName}</h2>
@@ -102,7 +116,6 @@ function App() {
         <p>{visibility} km</p>
         <p>{uv} UV</p>
         <p>{precip} mm</p>
-        <button onClick={getLocation}>Update Location</button>
       </div>
     </>
   );
